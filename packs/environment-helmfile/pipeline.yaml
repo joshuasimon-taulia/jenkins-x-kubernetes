@@ -50,6 +50,18 @@ pipelines:
           command: jx
           name: install-jx-crds
         - args:
+          - apply
+          - --wait
+          - --validate=false
+          - -f
+          - https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+          command: kubectl
+          dir: /workspace/source
+          env:
+          - name: DEPLOY_NAMESPACE
+            value: cert-manager
+          name: install-cert-manager-crds
+        - args:
           - step
           - create
           - helmfile
